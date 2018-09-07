@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.BoardMapper">
+
+	<select id="select" resultType="BoardVO">
+		<include refid="pagingheader"></include>
+		select dense_rank() over(order by ref)rank, a.* from 
+		(select (select count(*) from comments where num = b.num  )as comment_count, b.* from  board b
+		<include refid="search"></include>
+		) a order by ref desc, step
+		<include refid="pagingfooter"></include>
+	</select>
+	<!-- <select id="selectDel">
+		select * from board where del = 1
+	</select> -->
+	<sql id="pagingheader">
+		select * from
+		(select rownum rnum, r.* from
+		(
+	</sql>
+	<sql id="pagingfooter">
+		) r )where rnum between #{start} and #{end} 
+	</sql>
+	<insert id="insert">
+		insert into BOARD
+		(num, NAME,password, title,content
+		,read_count, write_date,ref,step,depth,show)
+		values(NUM.NEXTVAL,#{name},#{password},#{title},#{content},0,sysdate,num.currval,0,0,'y')
+	</insert>
+
+	<!-- <delete id="delete" parameterType="BoardVO">
+		delete from board where num =
+		#{num}
+	</delete>  -->
+	
+	<update id="delete">
+		update board set show = 'n', del = 1 where num = #{num}
+	</update>
+	
+	<select id="detailBoard" resultType="BoardVO">
+		select * from
+		(select rownum rnum,r.* from(select dense_rank() over(order by ref)rank,a.*
+		from
+		(select * from board )a
+		order by num desc,step)r)where num = #{num}
+	</select>
+	<!-- 조회수 증가 -->
+	<update id="viewCount">
+		update board set READ_COUNT = read_count +1 where num=#{num}
+	</update>
+	<update id="update" parameterType="BoardVO">
+		update board
+		set
+		name = #{name},
+		password = #{password},
+		title = #{title},
+		content = #{content}
+		where num
+		= #{num}
+	</update>
+	<select id="selectUpdate" resultType="BoardVO">
+		select * from board where
+		num = #{num}
+	</select>
+	<sql id="search">
+		<choose>
+			<when test="search_option == 'all'">
+				where
+				name like '%'||#{keyword}||'%'
+				or title like
+				'%'||#{keyword}||'%'
+				or content like '%'||#{keyword}||'%'
+			</when>
+			<otherwise>
+				where ${search_option} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+	<select id="countArticle" resultType="int">
+		select count(*) from board
+		<include refid="search"></include>
+	</select>
+	
+	<select id="passCheck" resultType="int">
+		select count(*) from board
+		where num = #{num} and password = #{password}
+	</select>
+	<select id="updateCheck" resultType="int">
+		select count(*) from board
+		where num = #{num} and password = #{password}
+	</select>
+	<!-- 정렬 답글(step)로 먼저 쓴 글 순서 정해주기 -->
+	<update id="reviewUpdate" parameterType="BoardVO">
+		update board set step = step +1 where ref = #{ref } and step > #{step }
+	</update>
+	<insert id="reviewinsert">
+		insert into BOARD
+		(num, NAME,password, title,content
+		,read_count, write_date,ref,step,depth,show)
+		values(NUM.NEXTVAL,#{name},#{password},#{title},#{content},0,sysdate,#{ref},#{step}+1,#{depth}+1,'y')
+	</insert>
+	<insert id="commentInsert">
+		insert into comments
+		(comment_num,num,NAME,password,content,comment_date,ref,step,depth)
+		values(comment_num.NEXTVAL,#{num},#{name},#{password},#{content},sysdate,comment_num.currval,0,0)
+	</insert>
+	<select id="commentSelect" resultType="CommentVO">
+		select * from
+		(select rownum rnum, r.* from
+		(
+select dense_rank() over(order by ref)rank, a.* from 
+		(select  c.* from  comments c
+		) a order by ref desc, step ) r ) where num = #{num}
+	</select>
+	<update id="commentUpdate">
+		update comments set 
+		name = #{name},
+		content = #{content},
+		password = #{password}
+		where comment_num
+		= #{comment_num}
+	</update>
+	<delete id="commentDelete" parameterType="CommentVO">
+		delete from comments where comment_num = #{comment_num}
+	</delete>
+	<select id="commentPassCheck" resultType="int">
+		select count(*) from comments
+		where comment_num = #{comment_num} and password = #{password}
+	</select>
+	<update id="commentCommentUpdate" parameterType="BoardVO">
+		update comments set step = step +1 where ref = #{ref } and step > #{step }
+	</update>
+	<!-- 대댓글 -->
+	<insert id="cocomentInsert">
+		insert into comments
+		(comment_num,num ,NAME,password,content
+		,comment_date,ref,step,depth)
+		values(comment_num.NEXTVAL,#{num},#{name},#{password},#{content},sysdate,#{ref},#{step}+1,#{depth}+1)
+	</insert>
+</mapper>
+
+
