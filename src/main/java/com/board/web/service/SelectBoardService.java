@@ -20,6 +20,7 @@ public interface SelectBoardService {
 	public int commentDelete(CommentVO cvo);
 	public int commentPassCheck(CommentVO cvo);
 	public int commentCommentUpdate(CommentVO cvo);
+	public int commentCount(int num);
 	//대댓글
 	public int cocomentInsert(CommentVO cvo);
 	//public int commentUpdateInsert(CommentVO cvo);

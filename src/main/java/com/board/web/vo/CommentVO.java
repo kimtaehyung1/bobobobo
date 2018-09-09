@@ -16,8 +16,15 @@ public class CommentVO {
 	private int step;
 	private int depth;
 	private int rn;
+	public String getDel() {
+		return del;
+	}
+	public void setDel(String del) {
+		this.del = del;
+	}
 	private int rnum;
 	private int rank;
+	private String del;
 	
 	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
@@ -107,8 +114,14 @@ public class CommentVO {
 	public String toString() {
 		return "CommentVO [comment_num=" + comment_num + ", name=" + name + ", password=" + password + ", content="
 				+ content + ", comment_count=" + comment_count + ", ref=" + ref + ", step=" + step + ", depth=" + depth
-				+ ", rn=" + rn + ", rnum=" + rnum + ", rank=" + rank + ", comment_date=" + comment_date + ", num=" + num
-				+ "]";
+				+ ", rn=" + rn + ", rnum=" + rnum + ", rank=" + rank + ", del=" + del + ", comment_date=" + comment_date
+				+ ", num=" + num + ", getDel()=" + getDel() + ", getRn()=" + getRn() + ", getRnum()=" + getRnum()
+				+ ", getRank()=" + getRank() + ", getRef()=" + getRef() + ", getStep()=" + getStep() + ", getDepth()="
+				+ getDepth() + ", getNum()=" + getNum() + ", getPassword()=" + getPassword() + ", getComment_count()="
+				+ getComment_count() + ", getComment_num()=" + getComment_num() + ", getName()=" + getName()
+				+ ", getContent()=" + getContent() + ", getComment_date()=" + getComment_date() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+	
 	
 }

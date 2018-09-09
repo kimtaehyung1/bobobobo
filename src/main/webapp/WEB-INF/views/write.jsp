@@ -118,10 +118,11 @@
  	function check(){
  		var name = $('#name').val();
  		var password = $('#password').val();
- 		var passReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,10}$/;
+ 		
  		var title = $('#title').val();
  		var content = $('#content').val();
  		var blank = /[\s]/g;
+ 		var passReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,10}$/;
  		
  		if(name == ""){
  			alert("이름을 입력하세요");	
