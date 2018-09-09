@@ -25,8 +25,8 @@ public class BoardController {
 	
 	@Autowired
 	private SelectBoardService service;
-
-	
+      
+	 
 	   
 	//리스트보기
 	@RequestMapping(value="/list.do", method=RequestMethod.GET)
