@@ -27,7 +27,7 @@ public class BoardController {
 	private SelectBoardService service;
 
 	
-	
+	   
 	//리스트보기
 	@RequestMapping(value="/list.do", method=RequestMethod.GET)
 	public List<BoardVO> list(@RequestParam(defaultValue="all")String search_option,
