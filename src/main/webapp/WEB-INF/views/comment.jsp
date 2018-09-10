@@ -38,12 +38,12 @@
 													for(var i=0;i<value.depth;i++){
 												a += '&nbsp;&nbsp;'
 													}
-												a += '<b style="color:red;font-size:17px;">RE</b>';	
+												a += '<b style="color:red;font-size:17px;">┗ RE</b>';	
 												
 												}
 												a += '<div style="display: inline-block;">'
-														+ '<pre style="font-size: 17px;margin-left:10px; white-space:pre; "'
-														+ 'class="commentName" "<b style="font-size: 20px;margin-right: 10px;color: mediumblue;">'+'┗'+'</b>'+value.name+'</pre>'
+														+ '<pre style="font-size: 17px;margin-left:10px; white-space:pre;"'
+														+ 'class="commentName"><b style="font-size: 20px;margin-right: 10px;color: mediumblue;">'+value.name+'</b></pre>'
 												a += '</div>'
 												a += '<div style="display: inline-block;">'
 														+ '<sub style="margin-left:10px;margin-right: 10px;">'+value.comment_date+'</sub>';	
@@ -102,13 +102,14 @@
 				 alert("비밀번호를 입력하세요");
 				 $('#password').focus();
 				 return false;
-			 }else if(!passReg.test(password)){
-				 alert("4자리 숫자만 입력해주세요");
-				 return false; 
-			  }else if(password.length == 0 || !password.trim()){
+			 }else if(password.length == 0 || !password.trim()){
 					 alert("연속적인 공백은 입력이 안됩니다");
 					 password.focus();
 					 return false; 
+			 }else if(!passReg.test(password)){
+				 alert("4자리 숫자만 입력해주세요");
+				 return false; 
+			
 			 } else if(content == ""){
 				 alert("내용을 입력하세요");
 				 $('#content').focus();
@@ -242,7 +243,7 @@
 		var passReg =/^[0-9]*$/;
 		var name = $('[name=comment_name_' + comment_num +']').val();
 		var password = $('[name=comment_password_'+ comment_num +']').val();
-		var content = $('[name=comment_password_'+ comment_num +']').val();
+		var content = $('[name=comment_content_'+ comment_num +']').val();
 		var blank = /[\s]/g;
 		
 
@@ -271,7 +272,7 @@
 				 return false; 
 		 } else if(content == ""){
 			 alert("내용을 입력하세요");
-			 $('[name=comment_password_'+ comment_num +']').focus();
+			 $('[name=comment_content_'+ comment_num +']').focus();
 			 return false;
 		 }else if(content.length == 0 || !content.trim()){
 	 			alert("연속적인 공백은 입력이 안됩니다");
@@ -296,7 +297,7 @@
 								commentList(); //댓글 작성 후 댓글 목록 reload
 								 $('[name=comment_name_' + comment_num +']').val();
 								 $('[name=comment_password_'+ comment_num +']').val();
-								 $('[name=comment_password_'+ comment_num +']').val();
+								 $('[name=comment_content_'+ comment_num +']').val();
 							}
 						}
 					})
