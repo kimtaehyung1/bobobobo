@@ -139,10 +139,10 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlsession.insert("com.board.mapper.BoardMapper.cocomentInsert",cvo);
 	}
 
-	/*@Override
-	public int commentUpdateInsert(CommentVO cvo) {
+	@Override
+	public int commentCount(int num) {
 		// TODO Auto-generated method stub
-		return sqlsession.insert("com.board.mapper.BoardMapper.commentPassCheck",cvo);
-	}*/
-
+		return sqlsession.selectOne("com.board.mapper.BoardMapper.commentCount",num);
+	}
+	
 }

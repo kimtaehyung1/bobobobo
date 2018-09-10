@@ -80,24 +80,43 @@
 		function commentInsert() {
 			var num = "${vo.num}"; 
 			var name = $('#name').val();
-			var passReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,10}$/;
+			var passReg = /^[0-9]*$/;
 			var password = $('#password').val();
 			var content = $('#content').val();
-				
-				 if(name == "") {
-					 alert("이름");
-					 $('#name').focus();
-					return false;
-				 }else if(password == ""){
-					 alert("비밀번호");
-					 $('#password').focus();
-					 return false;
-				 }else if(content == ""){
-					 alert("내용");
-					 $('#content').focus();
-					 return false;
-					
-				 }else{
+			var blank = /[\s]/g;
+		
+		
+			
+			 if(name == "") {
+				 alert("이름을 입력하세요");
+				 $('#name').focus();
+				return false;
+			  }else if(name.length == 0 || !name.trim()){
+				 alert("연속적인 공백은 입력이 안됩니다");
+				 name.focus(); 
+				 return false; 
+			/*   } else if(name.value){
+			 	name.value= gg.replace(gg,"익명");
+			 	return false;  */
+			 }else if(password == ""){
+				 alert("비밀번호를 입력하세요");
+				 $('#password').focus();
+				 return false;
+			 }else if(!passReg.test(password)){
+				 alert("4자리 숫자만 입력해주세요");
+				 return false; 
+			  }else if(password.length == 0 || !password.trim()){
+					 alert("연속적인 공백은 입력이 안됩니다");
+					 password.focus();
+					 return false; 
+			 } else if(content == ""){
+				 alert("내용을 입력하세요");
+				 $('#content').focus();
+				 return false;
+			 }else if(content.length == 0 || !content.trim()){
+		 			alert("연속적인 공백은 입력이 안됩니다");
+		 			return false;	
+			 }else{
 					 
 					//key/value = 키이름이 컨트롤러에 있는 이름이랑 같아야 한다. 
 						$.ajax({
@@ -136,7 +155,7 @@
 			var a = '';
 			a += '<div class="input-group" id="input-group">';
 			a += '작성자 : <input style="height: 20px;margin-right: 10px;" type="text" class="commentName" maxlength="10" name="name_'+comment_num+'"  />';
-		    a += '비밀번호 : <input style="height: 20px;margin-right: 10px;" type="password" class="commentPassword" maxlength="10" name="password_'+comment_num+'" />'; 
+		    a += '비밀번호 : <input style="height: 20px;margin-right: 40px;" type="password" class="commentPassword" maxlength="10" name="password_'+comment_num+'" />'; 
 			a += '내 &nbsp;용 : <input style="height: 20px;margin-left:5px;margin-top: 8px;width:420px;" type="text" maxlength="30" class="commentContent" name="content_'+comment_num+'"  />';
 			a += '<input value="저장" style="height: 25px;margin-left: 5px;" class="btn btn-default" type="button" onclick="commentUpdateProc('+ comment_num +');" />'
 			a += '</div>';
@@ -144,6 +163,9 @@
 			$('.commentContent' + comment_num).html(a);
 			$('.commentPassword' +comment_num).html(a);
 			 
+			
+			
+			
 		 }
 		//댓글 수정
 		function commentUpdateProc(comment_num) {
@@ -202,7 +224,7 @@
 																													
 		a += '<div class="input-group" id="input-group">';
 		a += '작성자 : <input style="height: 20px;margin-right: 10px;" type="text" class="commentName" maxlength="10" name="comment_name_' + comment_num + '"/>';
-	    a += '비밀번호 : <input style="height: 20px;margin-right: 10px;" type="password" class="commentPassword" maxlength="10" name="comment_password_' + comment_num + '"/>'; 
+	    a += '비밀번호 : <input style="height: 20px;margin-right: 20px;" type="password" class="commentPassword" maxlength="4" name="comment_password_' + comment_num + '"/>'; 
 		
 	    a += '<div> 내 &nbsp;용 : <input style="height: 20px;margin-left:5px;margin-top: 8px;width:375px;" type="text" maxlength="30" class="commentContent" name="comment_content_' + comment_num + '"/>';
 	
@@ -217,26 +239,45 @@
  //대댓글 저장 
  function cocommentInsert(comment_num,ref,step,depth) {
 		var num = "${vo.num}"; 
-		var passReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,10}$/;
+		var passReg =/^[0-9]*$/;
 		var name = $('[name=comment_name_' + comment_num +']').val();
 		var password = $('[name=comment_password_'+ comment_num +']').val();
 		var content = $('[name=comment_password_'+ comment_num +']').val();
+		var blank = /[\s]/g;
 		
+
 		
-			 if(name == "") {
-				 alert("이름");
-				 $('#name').focus();
-				return false;
-			 }else if(password == ""){
-				 alert("비밀번호");
-				 $('#password').focus();
-				 return false;
-			 }else if(content == ""){
-				 alert("내용");
-				 $('#content').focus();
-				 return false;
-				
-			 }else{
+		 if(name == "") {
+			 alert("이름을 입력하세요");
+			 $('[name=comment_name_' + comment_num +']').focus();
+			return false;
+		  }else if(name.length == 0 || !name.trim()){
+			 alert("연속적인 공백은 입력이 안됩니다");
+			 $('[name=comment_name_' + comment_num +']').focus(); 
+			 return false; 
+		/*   } else if(name.value){
+		 	name.value= gg.replace(gg,"익명");
+		 	return false;  */
+		 }else if(password == ""){
+			 alert("비밀번호를 입력하세요");
+			 $('[name=comment_password_'+ comment_num +']').focus();
+			 return false;
+		 }else if(!passReg.test(password)){
+			 alert("4자리 숫자만 입력해주세요");
+			 return false; 
+		  }else if(password.length == 0 || !password.trim()){
+				 alert("연속적인 공백은 입력이 안됩니다");
+				 $('[name=comment_password_'+ comment_num +']').focus();
+				 return false; 
+		 } else if(content == ""){
+			 alert("내용을 입력하세요");
+			 $('[name=comment_password_'+ comment_num +']').focus();
+			 return false;
+		 }else if(content.length == 0 || !content.trim()){
+	 			alert("연속적인 공백은 입력이 안됩니다");
+	 			return false;	
+		 }else{
+				 
 				 
 				//key/value = 키이름이 컨트롤러에 있는 이름이랑 같아야 한다. 
 					$.ajax({

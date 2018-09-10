@@ -144,12 +144,12 @@
 		}
 			 document.form.submit();
 	  }
-	    window.onload = function(){
+	   window.onload = function(){
 		var count = ${count};
 		if(count == 0 ){
 			alert("검색결과가 없습니다.");
 			location.href="list.do";
-		}  
+		}   
 	}
 	</script>
 </html>

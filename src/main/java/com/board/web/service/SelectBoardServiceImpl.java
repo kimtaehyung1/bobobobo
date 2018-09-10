@@ -89,6 +89,12 @@ public class SelectBoardServiceImpl implements SelectBoardService {
 		return dao.cocomentInsert(cvo);
 	}
 
+	@Override
+	public int commentCount(int num) {
+		// TODO Auto-generated method stub
+		return  dao.commentCount(num);
+	}
+
 	/*@Override
 	public int commentUpdateInsert(CommentVO cvo) {
 		// TODO Auto-generated method stub

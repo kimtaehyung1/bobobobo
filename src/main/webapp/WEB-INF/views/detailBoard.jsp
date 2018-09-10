@@ -84,7 +84,7 @@
 						<b>작성자 :</b>
 						<input class="comment_name" type="text" id="name" name="name" placeholder="이름을 입력하세요." maxlength="10">
 						<b>비밀번호 :</b>
-						<input class="comment_password" type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." onchange="passInput(this)" maxlength="8">
+						<input class="comment_password" type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." onchange="passInput(this)" maxlength="4">
 						</div>
 						<div style="margin-left: 35px;">
 						<b >내용 :</b> 
@@ -114,8 +114,17 @@
 
 
  	function deletecheck(){
-		 window.open("PassCheck.do?num="+"${vo.num}",
+ 		var count = "${count}";
+
+ 		 if(count>0){
+ 			 alert("댓글이 있는 게시글은 삭제 할수 없습니다 ");
+ 			  
+ 		 }else if(count ==0){
+ 			 window.open("PassCheck.do?num="+"${vo.num}",
 						"delete","width=500,height=150");
+ 			 
+ 		 }
+		
  	}
 	function updatecheck(){
 		 window.open("updateCheck.do?num="+"${vo.num}",

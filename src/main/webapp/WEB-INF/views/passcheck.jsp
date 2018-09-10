@@ -30,7 +30,6 @@ function deletecheck(){
 	var con = confirm("정말로 삭제 하시겠습니까");
 	var pass = $('#password').val();
 	var num = "${vo.num}";
-	
 	if(con == true){
 		 $.ajax({
 	         type:"POST"

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.board.web.service.DeleteBoardService;
 import com.board.web.service.SelectBoardService;
 import com.board.web.vo.BoardVO;
 import com.board.web.vo.CommentVO;
@@ -26,10 +25,9 @@ public class BoardController {
 	
 	@Autowired
 	private SelectBoardService service;
-	@Autowired
-	private DeleteBoardService deleteService;
-
-	
+      
+	 
+	   
 	//리스트보기
 	@RequestMapping(value="/list.do", method=RequestMethod.GET)
 	public List<BoardVO> list(@RequestParam(defaultValue="all")String search_option,
@@ -67,6 +65,7 @@ public class BoardController {
 		service.viewCount(num);
 		List<CommentVO> com = service.commentList(cvo);
 		service.detailBoard(num);
+		model.addAttribute("count",service.commentCount(num));
 		model.addAttribute("vo",service.detailBoard(num));
 		model.addAttribute("com",com);
 		System.out.println(com);
@@ -100,15 +99,15 @@ public class BoardController {
 		service.reviewInsert(vo);
 		return "redirect:list.do";
 	}
-	
+	//댓글 리스트 
 	@RequestMapping(value="/commentList.do")
 	@ResponseBody //HTTP body 부분만 전달 XML, JSON으로 출력 할 때 사용
-
 	public List<CommentVO> commentList(CommentVO cvo,Model model){
 		
 		/*model.addAttribute("vo",service.detailBoard(num));*/
 		return service.commentList(cvo);
 	}
+	//댓글입력
 	@RequestMapping(value="/commentInsert.do",method=RequestMethod.POST)
 	@ResponseBody //HTTP body 부분만 전달 XML, JSON으로 출력 할 때 사용
 	public int commentInsert(CommentVO cvo) {
@@ -117,7 +116,7 @@ public class BoardController {
 		System.out.println(cvo.getContent());
 		return service.commentInsert(cvo);
 	}
-	
+	//댓글 수정
 	@RequestMapping(value="/commentUpadate.do",method=RequestMethod.POST)
 	@ResponseBody
 	public int commentUpdate(@RequestParam int comment_num
@@ -132,6 +131,7 @@ public class BoardController {
 		
 		return service.commentUpdate(cvo);
 	}
+	//댓글 삭제 
 	@RequestMapping(value="/commentDelete.do",method=RequestMethod.POST)
 	@ResponseBody
 	public int commentDelete (CommentVO cvo) {
@@ -139,7 +139,7 @@ public class BoardController {
 	
 		return service.commentDelete(cvo);
 	}
-	
+	//댓글 비번체크(화면)
 	@RequestMapping(value="/commentPassCheck.do", method=RequestMethod.GET)
 	public ModelAndView commentPassCheckGet(CommentVO cvo) {
 		System.out.println(cvo.getComment_num());
@@ -148,7 +148,7 @@ public class BoardController {
 	
 	return mav;	
 }
-	
+	//댓글 비번체크(이벤트)
 	@RequestMapping(value="/commentPassCheck.do", method=RequestMethod.POST)
 	public @ResponseBody Map<Object,Object> commentPassCheckPost(CommentVO cvo) {
 		System.out.println("qjsgh"+cvo.getComment_num());
@@ -170,6 +170,7 @@ public class BoardController {
 		}
 		return map;
 	}
+	//댓글 수정 비번 (화면)
 	@RequestMapping(value="/commentUpdateCheck.do", method=RequestMethod.GET)
 	public ModelAndView commentupdatecheckGet(CommentVO cvo) {
 		
@@ -177,7 +178,7 @@ public class BoardController {
 	mav.addObject("cvo",cvo);
 	return mav;	
 }
-	
+	//댓글 수정 비번 (이벤트)
 	@RequestMapping(value="/commentUpdateCheck.do", method=RequestMethod.POST)
 	public @ResponseBody Map<Object,Object> commentupdatecheckPost(CommentVO cvo) {
 		
@@ -195,6 +196,7 @@ public class BoardController {
 		}
 		return map;
 	}
+	//대댓글 등록
 	@RequestMapping(value="/cocommentInsert.do",method=RequestMethod.POST)
 	@ResponseBody //HTTP body 부분만 전달 XML, JSON으로 출력 할 때 사용
 	public int commentCommentInsert(CommentVO cvo) {

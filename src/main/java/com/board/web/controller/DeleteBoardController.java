@@ -22,14 +22,14 @@ public class DeleteBoardController {
 	private SelectBoardService service;
 
 	
-	@RequestMapping(value="/delete.do", method=RequestMethod.GET)
-	public void delete(BoardVO vo,Model model) {
-	 System.out.println(vo.toString());
+/*	@RequestMapping(value="/delete.do", method=RequestMethod.GET)
+	public String delete(BoardVO vo,Model model) {
+	 
 		
-		deleteBoardService.delete(vo);
-		System.out.println("삭제");
-	
-	}	
+		
+		System.out.println("삭제됩니다~");
+		return   "redirect:list.do";
+	}*/
 
 	@RequestMapping(value="/PassCheck.do", method=RequestMethod.GET)
 	public ModelAndView passcheckGet(BoardVO vo) {
@@ -46,7 +46,8 @@ public class DeleteBoardController {
 		
 		boolean pc ;
 		int count = deleteBoardService.passCheck(vo);
-		BoardVO bvo = service.detailBoard(num);
+	
+		//BoardVO bvo = service.detailBoard(num);
 		
 		System.out.println("count"+count);
 		//System.out.println("bvo"+bvo.getDel());
@@ -55,7 +56,7 @@ public class DeleteBoardController {
 			pc = true;
 			map.put("pc", pc);
 			deleteBoardService.delete(vo);
-			System.out.println("삭제");
+			//System.out.println("삭제");
 		}else {
 			pc = false;
 			map.put("pc", pc);
